@@ -3,9 +3,7 @@ import { createContext } from 'react';
 export interface IUser {
   id: string;
   name: string;
-  publicKey: string;
-  email: string;
-  country?: string;
+  isAdmin?: boolean;
 }
 export interface IAppContext {
   context: {
