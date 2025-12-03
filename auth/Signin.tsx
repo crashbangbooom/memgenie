@@ -1,4 +1,4 @@
-// app/auth/login/page.tsx
+// auth/login/page.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -36,7 +36,7 @@ type LoginValues = z.infer<typeof loginSchema>;
 
 export default function Signin() {
   const router = useRouter();
-  const { signin, loadingSignin } = useAuth();
+  const { signin, loadingSignin, signinWithGoogle, loadingSigninWithGoogle,  signinWithFacebook, loadingSigninWithFacebook } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<LoginValues>({
@@ -146,11 +146,23 @@ export default function Signin() {
                     <hr className="h-px w-full my-4 bg-gray-200 border-0 dark:bg-gray-700" />
                   </div>
                   <div className="flex gap-2 justify-between items-center">
-                    <Button variant="outline" type="button" className="w-full">
-                      Login with Google
-                    </Button>
-                    <Button variant="outline" type="button" className="w-full">
-                      Login with Facebook
+                    <Button
+                      variant="outline"
+                      type="button"
+                      className="w-full"
+                      onClick={signinWithGoogle}
+                      disabled={loadingSigninWithGoogle}
+                    >
+                     {loadingSigninWithGoogle ? <><Spinner /> Login with Google ...</> : "Login with Google" }                    </Button>
+
+                    <Button
+                      variant="outline"
+                      type="button"
+                      className="w-full"
+                      onClick={signinWithFacebook}
+                      disabled={loadingSigninWithFacebook}
+                    >
+                     {loadingSigninWithFacebook ? <><Spinner /> Login with Facebook... </>  : "Login with Facebook"}
                     </Button>
                   </div>
                   <div className="text-center text-muted-foreground">

@@ -1,3 +1,5 @@
+// auth/auth-config/useAuth.ts
+
 import { useRouter } from 'next/navigation';
 import { useMutation } from 'urql';
 import {
@@ -14,6 +16,8 @@ import {
   resetPasswordSB,
   sendResetPasswordLinkSB,
   signinSB,
+  signinWithFacebookSB,
+  signinWithGoogleSB,
   signupSB,
 } from './supabaseAuth';
 import Cookies from 'js-cookie';
@@ -21,7 +25,7 @@ import Cookies from 'js-cookie';
 export function useAuth() {
   const router = useRouter();
   const [loadingType, setLoadingType] = useState<
-    'signup' | 'signin' | 'forgotPassword' | 'resetPassword' | 'logout' | null
+    'signup' | 'signin' | 'forgotPassword' | 'resetPassword' | 'logout' | 'signinWithGoogle' | 'signinWithFacebook' | null
   >(null);
 
   const [{ fetching: fetchingSignup }, signupGQL] = useMutation(SIGNUP);
@@ -69,7 +73,7 @@ export function useAuth() {
       } else if (AUTH_PROVIDER === 'supabase') {
         await signinSB(values);
       }
-      handleSuccess('Logged in successfully.', '/dashboard');
+      handleSuccess('Logged in successfully.', '/');
     } catch (err: any) {
       toast.error(err?.message || 'Login failed. Check credentials.');
     } finally {
@@ -130,7 +134,7 @@ export function useAuth() {
       } else if (AUTH_PROVIDER === 'supabase') {
         await logoutSB();
       }
-      handleSuccess('Logged out successfully.', '/');
+      handleSuccess('Logged out successfully.', '/auth/signin');
     } catch (err: any) {
       toast.error(err?.message || 'Logout failed.');
     } finally {
@@ -138,8 +142,32 @@ export function useAuth() {
     }
   };
 
+  const signinWithGoogle = async () => {
+    try {
+      setLoadingType('signin');
+      await signinWithGoogleSB();
+    } catch (err: any) {
+      toast.error(err?.message || 'Google Login Failed');
+    } finally {
+      setLoadingType(null);
+    }
+  };
+
+  const signinWithFacebook = async () => {
+    try {
+      setLoadingType('signin');
+      await signinWithFacebookSB();
+    } catch (err: any) {
+      toast.error(err?.message || 'Facebook Login Failed');
+    } finally {
+      setLoadingType(null);
+    }
+  };
+
   let loadingSignup = fetchingSignup || loadingType === 'signup';
   let loadingSignin = fetchingSignin || loadingType === 'signin';
+  let loadingSigninWithFacebook = loadingType === 'signinWithFacebook';
+  let loadingSigninWithGoogle = loadingType === 'signinWithGoogle';
   let loadingForgotPassword =
     fetchingSendResetPasswordLink || loadingType === 'forgotPassword';
   let loadingResetPassword =
@@ -151,6 +179,10 @@ export function useAuth() {
     loadingSignup,
     signin,
     loadingSignin,
+    signinWithGoogle,
+    loadingSigninWithGoogle,
+    signinWithFacebook,
+    loadingSigninWithFacebook,
     forgotPassword,
     loadingForgotPassword,
     resetPassword,

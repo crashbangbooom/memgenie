@@ -1,3 +1,5 @@
+// auth/SignupSuccess.tsx
+
 import Link from 'next/link';
 import Maxwidth from '@/components/Maxwidth';
 import { CheckCircle } from 'lucide-react';
