@@ -1,6 +1,6 @@
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { ApolloServer } from '@apollo/server';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import resolvers from '@/server/graphql/resolvers';
 import typeDefs from '@/server/graphql/typedefs';
 import { getPayload } from '@/server/services/token';
@@ -26,6 +26,25 @@ const handler = startServerAndCreateNextHandler<NextRequest>(server, {
     return { user, isAdmin };
   },
 });
+
+const getCorsHeaders = () => {
+  const headers = {
+    'Access-Control-Allow-Methods': `GET, POST, PUT, DELETE, OPTIONS`,
+    'Access-Control-Allow-Headers': `Content-Type, Authorization`,
+    'Access-Control-Allow-Origin': `*`,
+  };
+  return headers;
+};
+
+export const OPTIONS = async (request: NextRequest) => {
+  return NextResponse.json(
+    {},
+    {
+      status: 200,
+      headers: getCorsHeaders(),
+    }
+  );
+};
 
 export async function GET(request: NextRequest) {
   return handler(request);

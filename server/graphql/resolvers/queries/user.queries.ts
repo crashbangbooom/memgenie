@@ -36,6 +36,8 @@ export const solveQuestion = async (
     optionsString +
     '\n</options>';
 
+  console.log('Prompt sent to OpenAI:', prompt);
+
   if (context) {
     prompt +=
       'Here is the context for this question\n<context>\n' +
