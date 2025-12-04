@@ -1,11 +1,12 @@
 import { IGqlContext } from '@/types';
 import { log } from 'console';
+import OpenAI from 'openai';
 
 export const user = (_: unknown, args: unknown, { user }: IGqlContext) => {
   return user;
 };
 
-export const solveQuestion = (
+export const solveQuestion = async (
   _: unknown,
   {
     question,
@@ -23,7 +24,12 @@ export const solveQuestion = (
     })
     .join('\n');
   let prompt =
-    'You are a question solver. Solve following question and return the number of correct option\nExample of output {correctOption: 1}\n<question>\n';
+    'You are a question solver. Solve following question and return the number of correct option\n' +
+    `JSON format:
+{
+  "correctOption": <number>
+}` +
+    '\nExample of output {correctOption: 1}\n<question>\n';
   prompt += question;
   prompt +=
     '\n</question>below are the options\n<options>\n' +
@@ -36,8 +42,21 @@ export const solveQuestion = (
       context +
       '\n</context>';
   }
-  console.log(prompt);
-  return {
-    correctOption: 1,
-  };
+
+  const client = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY!,
+  });
+
+  const response = await client.chat.completions.create({
+    model: 'gpt-4o-mini',
+    response_format: { type: 'json_object' },
+    messages: [
+      {
+        role: 'user',
+        content: prompt,
+      },
+    ],
+  });
+
+  return JSON.parse(response.choices[0].message.content as string);
 };
