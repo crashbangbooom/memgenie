@@ -4,6 +4,10 @@ import projectTypedefs from './project';
 const typeDefs = gql`
   scalar Date
 
+  type Answer {
+    correctOption: Int
+  }
+
   type User {
     id: String!
     name: String
@@ -30,6 +34,11 @@ const typeDefs = gql`
 
   type Query {
     user: User
+    solveQuestion(
+      question: String!
+      options: [String!]
+      context: String
+    ): Answer
   }
   type Mutation {
     registerUser(
