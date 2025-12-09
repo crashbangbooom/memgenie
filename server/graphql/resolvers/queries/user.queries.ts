@@ -24,10 +24,11 @@ export const solveQuestion = async (
     })
     .join('\n');
   let prompt =
-    'You are a question solver. Solve following question and return the number of correct option\n' +
+    'You are a question solver. Solve following question and return the number of correct option. If there is a main word also return that word. For example, in the following question\nWhat is the meaning of malice\nMalice is the main word' +
     `JSON format:
 {
   "correctOption": <number>
+  "mainWord": "<main word>"
 }` +
     '\nExample of output {correctOption: 1}\n<question>\n';
   prompt += question;

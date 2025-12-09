@@ -6,6 +6,7 @@ const typeDefs = gql`
 
   type Answer {
     correctOption: Int
+    mainWord: String
   }
 
   type User {
