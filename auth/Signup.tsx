@@ -60,10 +60,10 @@ export default function Signup() {
   return (
     <div className="flex min-h-svh   items-center justify-center">
       <Maxwidth className="max-w-md py-8">
-        <Card>
+        <Card className="bg-gray-800">
           <CardHeader>
-            <CardTitle>Create an account</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-green-400">Create an account</CardTitle>
+            <CardDescription className="text-white">
               Enter your information below to create your account
             </CardDescription>
           </CardHeader>
@@ -78,7 +78,7 @@ export default function Signup() {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Full Name*</FormLabel>
+                      <FormLabel className="text-white">User Name*</FormLabel>
                       <FormControl>
                         <Input placeholder="John Doe" {...field} />
                       </FormControl>
@@ -92,7 +92,7 @@ export default function Signup() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email*</FormLabel>
+                      <FormLabel className="text-white">Email*</FormLabel>
                       <FormControl>
                         <Input placeholder="john@example.com" {...field} />
                       </FormControl>
@@ -106,7 +106,7 @@ export default function Signup() {
                   name="phone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone*</FormLabel>
+                      <FormLabel className="text-white">Phone*</FormLabel>
                       <FormControl>
                         <Input placeholder="03001234567" {...field} />
                       </FormControl>
@@ -120,7 +120,7 @@ export default function Signup() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password*</FormLabel>
+                      <FormLabel className="text-white">Password*</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Input
@@ -154,7 +154,9 @@ export default function Signup() {
                   name="confirmPassword"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Confirm Password*</FormLabel>
+                      <FormLabel className="text-white">
+                        Confirm Password*
+                      </FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Input
@@ -186,7 +188,7 @@ export default function Signup() {
                   <Button
                     type="submit"
                     disabled={loadingSignup}
-                    className="w-full"
+                    className="w-full bg-green-500 text-white hover:bg-green-400"
                   >
                     {loadingSignup ? (
                       <>
@@ -204,18 +206,22 @@ export default function Signup() {
                     <hr className="h-px w-full my-4 bg-gray-200 border-0 dark:bg-gray-700" />
                   </div>
                   <div className="flex gap-2 justify-between items-center">
-                    <Button variant="outline" type="button" className="w-full">
+                    <Button
+                      variant="outline"
+                      type="button"
+                      className="w-full bg-green-500 hover:bg-green-400 text-white hover:text-white"
+                    >
                       Login with Google
                     </Button>
-                    <Button variant="outline" type="button" className="w-full">
+                    {/* <Button variant="outline" type="button" className="w-full">
                       Login with Facebook
-                    </Button>
+                    </Button> */}
                   </div>
-                  <div className="text-center text-muted-foreground">
+                  <div className="text-center text-white">
                     Already have an account?{' '}
                     <Link
                       href="/auth/signin"
-                      className="underline hover:text-blue-500"
+                      className="underline text-green-500 hover:text-green-600"
                     >
                       Login
                     </Link>
