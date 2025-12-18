@@ -47,6 +47,7 @@ export async function updateSession(request: NextRequest) {
     !request.nextUrl.pathname.includes('/auth/signup') &&
     !request.nextUrl.pathname.includes('/auth/forgot-password') &&
     !request.nextUrl.pathname.includes('/api/graphql') &&
+    !request.nextUrl.pathname.includes('/api/stripe/handle-stripe-payment') &&
     !request.nextUrl.pathname.startsWith('/auth')
   ) {
     // no user, potentially respond by redirecting the user to the login page

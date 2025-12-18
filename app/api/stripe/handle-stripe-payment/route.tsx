@@ -3,6 +3,7 @@ import stripe from '@/server/utils/stripe';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
+  console.log('Stripe webhook invoked');
   const sig = req.headers.get('stripe-signature') as string;
   const rawBody = await req.text();
   let event;
