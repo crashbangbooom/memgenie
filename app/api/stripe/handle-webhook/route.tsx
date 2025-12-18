@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
         where: { id: userId },
         data: {
           subscriptionEndDate: new Date(
-            subscription?.ended_at ? subscription.ended_at * 1000 : 0
+            subscription?.items.data[0].current_period_end * 1000
           ),
         },
       });
