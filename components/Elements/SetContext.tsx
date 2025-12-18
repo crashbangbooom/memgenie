@@ -29,14 +29,6 @@ function SetContext() {
   useEffect(() => {
     if (!fetchingCurrentUser && userData?.user) {
       setUser?.(userData.user);
-      if (
-        (!userData?.user?.name || !userData?.user?.country) &&
-        pathname !== '/profile'
-      ) {
-        router.push('/profile');
-      } else if (!userData?.user?.termsAccepted) {
-        router.push('/disclaimer');
-      }
     }
   }, [fetchingCurrentUser, userData]);
 
