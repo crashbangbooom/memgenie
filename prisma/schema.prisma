@@ -8,8 +8,6 @@ datasource db {
 }
 
 model User {
-  // id for relational database
-  // id   String    @id @default(cuid())
   id                  String    @id @default(auto()) @map("_id") @db.ObjectId
 
   name                String?   @default("")
@@ -23,8 +21,14 @@ model User {
   isPhoneVerified     Boolean   @default(false) 
   pwHash              String?   @default("")
 
+  isSubscribed        Boolean   @default(false)
+  subscriptionEndDate DateTime?
+
   phoneOtp            String?   @default("")
   phoneOtpDoC         DateTime?
+  invitedUsers        String[]  @default([])
 
   isAdmin             Boolean   @default(false)
 }
+
+

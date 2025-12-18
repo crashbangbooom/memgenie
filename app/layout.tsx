@@ -20,9 +20,11 @@ export default function RootLayout({
 }) {
   useEffect(() => {
     const token = Cookies.get('token');
-    if (!token) {
+    if (!token || token === 'undefined') {
       fetch('/api/token').then((data) => {
         data.json().then((d) => {
+          if (!d.token) return;
+          console.log('Fetched token:', d.token);
           Cookies.set('token', d.token);
           window.location.reload();
         });
