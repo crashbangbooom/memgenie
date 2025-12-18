@@ -3,6 +3,12 @@ import { log } from 'console';
 import OpenAI from 'openai';
 
 export const user = (_: unknown, args: unknown, { user }: IGqlContext) => {
+  if (!user) {
+    return null;
+  }
+  user.isSubscribed =
+    !!user.subscriptionEndDate &&
+    new Date(user.subscriptionEndDate) > new Date();
   return user;
 };
 

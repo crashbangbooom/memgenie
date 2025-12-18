@@ -17,6 +17,8 @@ const typeDefs = gql`
     state: String
     country: String
     isAdmin: Boolean
+    isSubscribed: Boolean
+    subscriptionEndDate: Date
   }
 
   type LoginResponse {
