@@ -50,12 +50,14 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="flex min-h-svh   items-center justify-center">
+    <div className="flex min-h-screen   items-center justify-center bg-yellow-500">
       <Maxwidth className="max-w-md py-8">
-        <Card>
+        <Card className="bg-gray-800">
           <CardHeader>
-            <CardTitle>Reset password</CardTitle>
-            <CardDescription>Enter your new password below.</CardDescription>
+            <CardTitle className="text-green-500">Reset password</CardTitle>
+            <CardDescription className="text-white">
+              Enter your new password below.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -68,7 +70,7 @@ export default function ResetPassword() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>New password</FormLabel>
+                      <FormLabel className="text-white">New password</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Input
@@ -102,7 +104,9 @@ export default function ResetPassword() {
                   name="confirmPassword"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Confirm password</FormLabel>
+                      <FormLabel className="text-white">
+                        Confirm password
+                      </FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Input
@@ -133,7 +137,7 @@ export default function ResetPassword() {
 
                 <Button
                   type="submit"
-                  className="w-full"
+                  className="w-full bg-green-500 text-white hover:bg-green-400"
                   disabled={loadingResetPassword}
                 >
                   {loadingResetPassword ? (
