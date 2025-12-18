@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -38,6 +38,7 @@ type SignupValues = z.infer<typeof signupSchema>;
 
 export default function Signup() {
   const router = useRouter();
+  const referralCodeId = useSearchParams().get('ref');
   const { signup, loadingSignup } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -54,7 +55,10 @@ export default function Signup() {
   });
 
   const onSubmit = async (values: SignupValues) => {
-    await signup(values);
+    await signup({
+      ...values,
+      referralCode: referralCodeId || null,
+    });
   };
 
   return (
