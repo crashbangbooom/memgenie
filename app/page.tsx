@@ -5,10 +5,25 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/auth/auth-config/useAuth';
+import { useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 export default function Home() {
   const router = useRouter();
   const { logout, loadingLogout } = useAuth();
+
+  useEffect(() => {
+    const token = Cookies.get('token');
+    if (!token || token === 'undefined') {
+      fetch('/api/get-token').then((data) => {
+        data.json().then((d) => {
+          if (!d.user?.token) return;
+          Cookies.set('token', d.user.token);
+          window.location.reload();
+        });
+      });
+    }
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center px-4 py-12 bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-black dark:via-neutral-900 dark:to-neutral-800 transition-colors duration-300">
