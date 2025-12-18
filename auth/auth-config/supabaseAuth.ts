@@ -1,18 +1,16 @@
 // auh/auth-config/supabaseAuth.ts
 
 import { createClient } from '@/lib/supabase/client';
-import { headers } from 'next/headers';
 // signup payload: { name, email, phone, password }
 export async function signupSB(payload: any) {
   const supabase = await createClient();
-  const origin = (await headers()).get('origin');
   const { name, email, phone, password, referralCode } = payload;
   const { data, error } = await supabase.auth.signUp({
     email, // you also signup with phone instaead of email, (check supabase api docs)
     password,
     options: {
       data: { name, phone, referralCode },
-      emailRedirectTo: `${origin}/auth/signin`,
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/signin`,
     },
   });
   if (error) throw error;
@@ -48,11 +46,10 @@ export async function signinWithMagicLinkSB(payload: any) {
 //  signin with google
 export async function signinWithGoogleSB() {
   const supabase = await createClient();
-  const origin = (await headers()).get('origin');
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `${origin}/auth/callback`,
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
     },
   });
   if (error) throw error;
@@ -62,11 +59,10 @@ export async function signinWithGoogleSB() {
 // signin with facebook
 export async function signinWithFacebookSB() {
   const supabase = await createClient();
-  const origin = (await headers()).get('origin');
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'facebook',
     options: {
-      redirectTo: `${origin}/auth/callback`,
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
     },
   });
   if (error) throw error;
@@ -76,9 +72,8 @@ export async function signinWithFacebookSB() {
 // Supabase reset sends email link by default
 export async function sendResetPasswordLinkSB(email: string) {
   const supabase = await createClient();
-  const origin = (await headers()).get('origin');
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${origin}/auth/reset-password`,
+    redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/reset-password`,
   });
   if (error) throw error;
   return true;

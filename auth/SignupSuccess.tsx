@@ -15,9 +15,9 @@ import { Button } from '@/components/ui/button';
 
 export default function SignupSuccess() {
   return (
-    <div className="flex min-h-svh items-center justify-center bg-yellow-500">
+    <div className="flex min-h-screen items-center justify-center bg-yellow-500">
       <Maxwidth className="max-w-md py-8">
-        <Card className="text-center">
+        <Card className="text-center bg-gray-800">
           <CardHeader>
             <div className="flex justify-center mb-4">
               <CheckCircle className="h-16 w-16 text-green-500" />

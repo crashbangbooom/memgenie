@@ -51,18 +51,19 @@ export default function Signup() {
       phone: '',
       password: '',
       confirmPassword: '',
+      referralCode: '',
     },
   });
 
   const onSubmit = async (values: SignupValues) => {
     await signup({
       ...values,
-      referralCode: referralCodeId || null,
+      referralCode: referralCodeId || '',
     });
   };
 
   return (
-    <div className="flex min-h-svh   items-center justify-center bg-yellow-500">
+    <div className="flex min-h-screen items-center justify-center bg-yellow-500">
       <Maxwidth className="max-w-md py-8">
         <Card className="bg-gray-800">
           <CardHeader>
