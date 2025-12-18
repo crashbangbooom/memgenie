@@ -49,12 +49,12 @@ export default function Signin() {
   };
 
   return (
-    <div className="flex min-h-svh items-center justify-center">
-      <Maxwidth className="max-w-md py-8">
-        <Card>
+    <div className="flex min-h-svh items-center justify-center ">
+      <Maxwidth className="max-w-md py-8 ">
+        <Card className='bg-gray-800'>
           <CardHeader>
-            <CardTitle>Login to your account</CardTitle>
-            <CardDescription>
+            <CardTitle className='text-green-500'>Login to your account</CardTitle>
+            <CardDescription className='text-white'>
               Enter your email below to login to your account
             </CardDescription>
           </CardHeader>
@@ -69,7 +69,7 @@ export default function Signin() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email*</FormLabel>
+                      <FormLabel className='text-white'>Email*</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="you@example.com"
@@ -88,10 +88,10 @@ export default function Signin() {
                   render={({ field }) => (
                     <FormItem>
                       <div className="flex items-center justify-between ">
-                        <FormLabel>Password*</FormLabel>
+                        <FormLabel className='text-white'>Password*</FormLabel>
                         <Link
                           href="/auth/forgot-password"
-                          className=" text-sm underline-offset-4 hover:underline"
+                          className=" text-sm text-white underline-offset-4 hover:underline"
                         >
                           Forgot your password?
                         </Link>
@@ -128,7 +128,7 @@ export default function Signin() {
                   <Button
                     type="submit"
                     disabled={loadingSignin}
-                    className="w-full"
+                    className="w-full bg-green-500 text-white hover:bg-green-400"
                   >
                     {loadingSignin ? (
                       <>
@@ -140,7 +140,7 @@ export default function Signin() {
                   </Button>
                   <div className="flex items-center gap-2">
                     <hr className="h-px w-full my-4 bg-gray-200 border-0 dark:bg-gray-700" />
-                    <span className="text-muted-foreground whitespace-nowrap">
+                    <span className="text-white whitespace-nowrap">
                       Or continue with
                     </span>
                     <hr className="h-px w-full my-4 bg-gray-200 border-0 dark:bg-gray-700" />
@@ -149,13 +149,14 @@ export default function Signin() {
                     <Button
                       variant="outline"
                       type="button"
-                      className="w-full"
+                      className="w-full bg-green-500 text-white hover:bg-green-400 hover:text-white"
                       onClick={signinWithGoogle}
                       disabled={loadingSigninWithGoogle}
+                      
                     >
                      {loadingSigninWithGoogle ? <><Spinner /> Login with Google ...</> : "Login with Google" }                    </Button>
 
-                    <Button
+                    {/* <Button
                       variant="outline"
                       type="button"
                       className="w-full"
@@ -163,13 +164,13 @@ export default function Signin() {
                       disabled={loadingSigninWithFacebook}
                     >
                      {loadingSigninWithFacebook ? <><Spinner /> Login with Facebook... </>  : "Login with Facebook"}
-                    </Button>
+                    </Button> */}
                   </div>
-                  <div className="text-center text-muted-foreground">
+                  <div className="text-center text-white">
                     Don&apos;t have an account?{' '}
                     <Link
                       href="/auth/signup"
-                      className="underline hover:text-blue-500"
+                      className="underline text-green-500 hover:text-green-600"
                     >
                       Sign up
                     </Link>
