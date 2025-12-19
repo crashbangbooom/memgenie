@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -38,6 +38,7 @@ type SignupValues = z.infer<typeof signupSchema>;
 
 export default function Signup() {
   const router = useRouter();
+  const referralCodeId = useSearchParams().get('ref');
   const { signup, loadingSignup } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -50,15 +51,19 @@ export default function Signup() {
       phone: '',
       password: '',
       confirmPassword: '',
+      referralCode: '',
     },
   });
 
   const onSubmit = async (values: SignupValues) => {
-    await signup(values);
+    await signup({
+      ...values,
+      referralCode: referralCodeId || '',
+    });
   };
 
   return (
-    <div className="flex min-h-svh   items-center justify-center">
+    <div className="flex min-h-screen items-center justify-center bg-yellow-500">
       <Maxwidth className="max-w-md py-8">
         <Card className="bg-gray-800">
           <CardHeader>

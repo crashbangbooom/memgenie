@@ -15,34 +15,34 @@ import { Button } from '@/components/ui/button';
 
 export default function SignupSuccess() {
   return (
-    <div className="flex min-h-svh items-center justify-center">
+    <div className="flex min-h-screen items-center justify-center bg-yellow-500">
       <Maxwidth className="max-w-md py-8">
-        <Card className="text-center">
+        <Card className="text-center bg-gray-800">
           <CardHeader>
             <div className="flex justify-center mb-4">
               <CheckCircle className="h-16 w-16 text-green-500" />
             </div>
-            <CardTitle className="text-2xl font-semibold">
+            <CardTitle className="text-2xl font-semibold text-green-500">
               Account Created Successfully!
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-white">
               We&apos;ve sent a confirmation email to your inbox. Please verify
               your email to complete the signup process.
             </CardDescription>
           </CardHeader>
 
           <CardContent>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               Once verified, you can log in to access your dashboard and start
               using your account.
             </p>
           </CardContent>
 
           <CardFooter className="flex flex-col gap-3">
-            <Button asChild className="w-full">
+            <Button asChild className="w-full bg-green-500 text-white hover:bg-green-400">
               <Link href="/auth/signin">Go to Login</Link>
             </Button>
-            <Button variant="outline" asChild className="w-full">
+            <Button variant="outline" asChild className="w-full bg-green-500 hover:bg-green-400 text-white hover:text-white">
               <Link href="/">Return to Home</Link>
             </Button>
           </CardFooter>

@@ -51,14 +51,14 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="flex min-h-svh   items-center justify-center">
+    <div className="flex min-h-screen   items-center justify-center bg-yellow-500">
       <Maxwidth className="max-w-md py-8">
-        <Card>
+        <Card className="bg-gray-800">
           <CardHeader>
-            <CardTitle>
+            <CardTitle className="text-green-500">
               {isSuccess ? 'Check Your Email' : 'Forgot Password'}
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-white">
               {isSuccess
                 ? `We have sent a password reset link to ${submittedEmail}.`
                 : 'Enter your email to receive a link to reset your password'}
@@ -76,7 +76,7 @@ export default function ForgotPassword() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel className="text-white">Email</FormLabel>
                         <FormControl>
                           <Input placeholder="you@example.com" {...field} />
                         </FormControl>
@@ -87,7 +87,7 @@ export default function ForgotPassword() {
 
                   <Button
                     type="submit"
-                    className="w-full"
+                    className="w-full bg-green-500 text-white hover:bg-green-400"
                     disabled={loadingForgotPassword}
                   >
                     {loadingForgotPassword ? (
@@ -105,11 +105,11 @@ export default function ForgotPassword() {
           </CardContent>
           <CardFooter className="flex justify-center">
             {!isSuccess && (
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Remember your password?{' '}
                 <Link
                   href="/auth/signin"
-                  className="text-primary underline-offset-4 hover:underline"
+                  className="text-green-500 underline-offset-4 hover:underline hover:text-green-600"
                 >
                   Sign In
                 </Link>
