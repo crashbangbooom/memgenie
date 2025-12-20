@@ -72,8 +72,6 @@ const Users = () => {
     query: GET_USERS,
   });
 
-  console.log(data, 'response');
-
   const [{ fetching: fetchingGiveFreeMonth }, giveFreeMonth] =
     useMutation(GIVE_FREE_MONTH);
 
@@ -83,6 +81,7 @@ const Users = () => {
 
     if (result.error) {
       toast.error(result.error.message || 'Failed to add free month');
+      setLoadingUserId(null);
       return;
     }
 
@@ -189,9 +188,15 @@ const Users = () => {
               giveFreeMonthFn(user.id);
             }}
             disabled={fetchingGiveFreeMonth}
-            className='bg-green-500 text-white hover:bg-green-500/80'
+            className="bg-green-500 hover:bg-green-400 text-black hover:text-black"
           >
-            {loadingUserId === user.id ? 'Processing...' : '🎁 Give Free Month'}
+            {loadingUserId === user.id ? (
+              <>
+                <Spinner className="text-black" /> Processing...
+              </>
+            ) : (
+              '🎁 Give Free Month'
+            )}
           </Button>
         );
       },
@@ -258,7 +263,7 @@ const Users = () => {
 
   if (fetchingUsers)
     return (
-      <div className="flex h-screen items-center justify-center text-lg">
+      <div className="flex h-screen items-center justify-center w-full">
         <Spinner className="w-10 h-10 text-green-500" />
       </div>
     );
@@ -266,14 +271,14 @@ const Users = () => {
 
   return (
     <div className="w-full p-4">
-      <div className="flex items-center justify-between py-4">
+      <div className="flex items-center justify-between py-4 ">
         <Input
-          placeholder="Filter users..."
+          placeholder="Filter Name..."
           value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
             table.getColumn('name')?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm text-black"
         />
 
         {/* <Button onClick={() => router.push("/user")} className="ml-auto">

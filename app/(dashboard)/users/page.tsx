@@ -1,7 +1,7 @@
 import Users from '@/dashboard/user/Users';
 
-const page = () => {
+const Page = () => {
   return <Users />;
 };
 
-export default page;
+export default Page;

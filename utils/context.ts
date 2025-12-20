@@ -4,6 +4,12 @@ export interface IUser {
   id: string;
   name: string;
   isAdmin?: boolean;
+  email: string;
+  isSubscribed: boolean;
+  subscriptionEndDate: string;
+  address: string;
+  country: string;
+  state: string;
 }
 export interface IAppContext {
   context: {

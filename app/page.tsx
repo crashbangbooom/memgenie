@@ -5,155 +5,121 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/auth/auth-config/useAuth';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import toast from 'react-hot-toast';
+import { AppContext } from '@/utils/context';
 
 export default function Home() {
   const router = useRouter();
   const { logout, loadingLogout } = useAuth();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // useEffect(() => {
-  //   const token = Cookies.get('token');
-  //   if (!token || token === 'undefined') {
-  //     fetch('/api/get-token').then((data) => {
-  //       data.json().then((d) => {
-  //         if (!d.user?.token) return;
-  //         Cookies.set('token', d.user.token);
-  //         window.location.reload();
-  //       });
-  //     });
-  //   }
-  // }, []);
+  const {
+    context: { user },
+  } = useContext(AppContext);
 
   useEffect(() => {
     const token = Cookies.get('token');
-
-    // Already logged in
-    if (token && token !== 'undefined') {
-      setIsLoggedIn(true);
-
-      if (!sessionStorage.getItem('login-toast')) {
-        toast.success('Logged in successfully 🚀');
-        sessionStorage.setItem('login-toast', 'true');
-      }
-      return;
-    }
-
-    // Try to get token from backend
-    fetch('/api/get-token')
-      .then((res) => res.json())
-      .then((d) => {
-        if (!d.user?.token) return;
-
-        Cookies.set('token', d.user.token);
-        setIsLoggedIn(true);
-
-        if (!sessionStorage.getItem('login-toast')) {
-          toast.success('Logged in successfully 🚀');
-          sessionStorage.setItem('login-toast', 'true');
-        }
-      })
-      .catch(() => {
-        // silent fail
+    if (!token || token === 'undefined') {
+      fetch('/api/get-token').then((data) => {
+        data.json().then((d) => {
+          if (!d.user?.token) return;
+          Cookies.set('token', d.user.token);
+          window.location.reload();
+        });
       });
+    }
   }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center px-4 py-12 bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-black dark:via-neutral-900 dark:to-neutral-800 transition-colors duration-300">
-      {/* Logo + Heading */}
-      <div className="flex flex-col items-center text-center space-y-4 mb-10">
-        <Image
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={120}
-          height={30}
-          className="dark:invert"
-          priority
-        />
-
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-white">
-          Welcome to Your Next.js Starter
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-black dark:via-neutral-900 dark:to-neutral-800 transition-colors duration-300">
+      {/* HERO SECTION (Membean-style) */}
+      <section className="max-w-6xl mx-auto px-6 py-24 text-center">
+        <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white">
+          Learn Smarter Vocabulary <br />
+          with <span className="text-primary">MemGenie Assistant</span>
         </h1>
 
-        <p className="text-gray-600 dark:text-gray-400 max-w-md">
-          Build your next project faster — optional auth included and ready to
-          use.
+        <p className="mt-6 text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          MemGenie helps you understand, remember, and use words naturally —
+          powered by intelligent explanations, examples, and daily practice.
         </p>
 
-        {isLoggedIn && (
-          <p className="mt-2 text-green-600 dark:text-green-400 font-medium">
-            ✅ You are logged in. Use extension now.
-          </p>
-        )}
-      </div>
+        {/* CTA Buttons */}
+        <div className="mt-10 flex flex-wrap justify-center gap-4">
+          {!user?.id ? (
+            <>
+              <Button
+                size="lg"
+                className="px-8 text-lg"
+                onClick={() => router.push('/auth/signup')}
+              >
+                Get Started Free
+              </Button>
 
-      {/* Action Buttons */}
-      <div className="flex flex-wrap gap-4 mt-6 justify-center">
-        {!isLoggedIn ? (
-          <>
-            <Button size="lg" onClick={() => router.push('/auth/signin')}>
-              Login
-            </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="px-8 text-lg"
+                onClick={() => router.push('/auth/signin')}
+              >
+                Login
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                size="lg"
+                className="px-8 text-lg"
+                onClick={() => router.push('/extension')}
+              >
+                🚀 Use Extension Now
+              </Button>
 
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={() => router.push('/auth/signup')}
-            >
-              Sign Up
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button
-              size="lg"
-              className="px-8 text-lg"
-              onClick={() => router.push('/extension')}
-            >
-              🚀 Use Extension Now
-            </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                disabled={loadingLogout}
+                onClick={logout}
+              >
+                Logout
+              </Button>
+            </>
+          )}
+        </div>
+      </section>
 
-            <Button
-              size="lg"
-              variant="outline"
-              disabled={loadingLogout}
-              onClick={() => {
-                Cookies.remove('token');
-                sessionStorage.removeItem('login-toast');
-                logout();
-                setIsLoggedIn(false);
-                toast.success('Logged out successfully');
-              }}
-            >
-              Logout
-            </Button>
-          </>
-        )}
-      </div>
+      {/* SIMPLE FEATURES STRIP (like Membean) */}
+      <section className="border-t border-gray-200 dark:border-neutral-800">
+        <div className="max-w-6xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+          <div>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+              Smart Word Meanings
+            </h3>
+            <p className="mt-3 text-gray-600 dark:text-gray-400">
+              Context-based explanations instead of boring dictionary
+              definitions.
+            </p>
+          </div>
 
-      {/* Footer */}
-      <footer className="mt-16 text-sm text-gray-500 dark:text-gray-400 text-center">
-        Built with ❤️ using{' '}
-        <a
-          href="https://nextjs.org"
-          className="text-blue-600 dark:text-blue-400 hover:underline"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Next.js
-        </a>{' '}
-        and{' '}
-        <a
-          href="https://ui.shadcn.com/"
-          className="text-blue-600 dark:text-blue-400 hover:underline"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          ShadCN UI
-        </a>
-      </footer>
+          <div>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+              Memory-Based Learning
+            </h3>
+            <p className="mt-3 text-gray-600 dark:text-gray-400">
+              Designed to help your brain retain words for the long term.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+              Browser Extension
+            </h3>
+            <p className="mt-3 text-gray-600 dark:text-gray-400">
+              Learn words instantly while browsing — no interruptions.
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

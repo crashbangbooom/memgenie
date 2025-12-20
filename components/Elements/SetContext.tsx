@@ -27,8 +27,7 @@ function SetContext() {
   });
   const { setUser, setFetching } = useContext(AppContext);
   const router = useRouter();
-  const pathname = usePathname();
-
+  const pathname = usePathname(); 
   useEffect(() => {
     setFetching?.(fetchingCurrentUser);
   }, [fetchingCurrentUser]);

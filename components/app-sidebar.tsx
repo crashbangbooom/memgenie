@@ -13,7 +13,7 @@ import {
   Settings2,
   SquareTerminal,
   User2,
-  UsersRound
+  UsersRound,
 } from 'lucide-react';
 
 import { NavMain } from '@/components/nav-main';
@@ -27,6 +27,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from '@/components/ui/sidebar';
+import Image from 'next/image';
 
 // This is sample data.
 const data = {
@@ -97,10 +98,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        {/* <TeamSwitcher teams={data.teams} /> */}
+        {/* <Image
+          src={'/assets/logo.svg'}
+          alt="logo"
+          width={249}
+          height={48}
+          className="mb-1"
+        /> */}
+        <h1 className='text-xl whitespace-nowrap overflow-hidden'>MemGenie Assistant</h1>
         <NavMain items={data.navMain} />
       </SidebarHeader>
       {/* <SidebarContent>
+         <TeamSwitcher teams={data.teams} /> 
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
       </SidebarContent> */}

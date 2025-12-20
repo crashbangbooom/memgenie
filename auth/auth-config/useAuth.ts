@@ -133,6 +133,7 @@ export function useAuth() {
         await Cookies.remove('token');
       } else if (AUTH_PROVIDER === 'supabase') {
         await logoutSB();
+        await Cookies.remove('token');
       }
       handleSuccess('Logged out successfully.', '/auth/signin');
     } catch (err: any) {

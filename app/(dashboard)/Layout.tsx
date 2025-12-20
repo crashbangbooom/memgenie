@@ -1,3 +1,5 @@
+// app/(dashboard)/layout.tsx
+'use client';
 import { AppSidebar } from '@/components/app-sidebar';
 import {
   Breadcrumb,
@@ -31,7 +33,6 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
     }
   }, [user, router]);
 
-  // 👇 Optionally show loader while user data is initializing
   if (!user) {
     return (
       <div className="flex h-screen items-center justify-center text-lg">
@@ -39,6 +40,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
       </div>
     );
   }
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -51,7 +53,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbPage className="line-clamp-1">
-                    Games Management
+                    MemGenie Assistant
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
@@ -61,7 +63,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
             <NavActions />
           </div> */}
         </header>
-        <div className="flex flex-1 gap-4 px-4 py-10">{children}</div>
+        <div className="flex flex-1 gap-4 p-4 border">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );
