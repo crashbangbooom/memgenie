@@ -189,3 +189,20 @@ export const phoneOtpLogin = async (
 export const deleteUser = adminOnly(async (_: unknown, { id }) => {
   return prisma.user.delete({ where: { id } });
 });
+
+export const giveFreeMonth = adminOnly(async (_: unknown, { id }) => {
+  const user = await prisma.user.findUnique({ where: { id } });
+  if (!user) {
+    throw new Error('User does not exist');
+  }
+  let newEndDate = new Date();
+  if (user.subscriptionEndDate && user.subscriptionEndDate > new Date()) {
+    newEndDate = new Date(user.subscriptionEndDate);
+  }
+  newEndDate.setMonth(newEndDate.getMonth() + 1);
+  const updatedUser = await prisma.user.update({
+    where: { id },
+    data: { subscriptionEndDate: newEndDate },
+  });
+  return updatedUser;
+});
