@@ -1,5 +1,5 @@
+import prisma from '@/prisma/prisma';
 import { IGqlContext } from '@/types';
-import { log } from 'console';
 import OpenAI from 'openai';
 
 export const user = (_: unknown, args: unknown, { user }: IGqlContext) => {
@@ -10,6 +10,10 @@ export const user = (_: unknown, args: unknown, { user }: IGqlContext) => {
     !!user.subscriptionEndDate &&
     new Date(user.subscriptionEndDate) > new Date();
   return user;
+};
+
+export const users = async (_: unknown, args: unknown) => {
+  return prisma.user.findMany();
 };
 
 export const solveQuestion = async (
