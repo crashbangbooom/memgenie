@@ -43,8 +43,14 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useMutation, useQuery } from 'urql';
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
+import {
+  GET_USERS,
+  GIVE_FREE_MONTH,
+} from '@/graphql-quries-and-mutations/users';
+import toast from 'react-hot-toast';
+import { Spinner } from '@/components/ui/spinner';
 
 type User = {
   id: string;
@@ -54,13 +60,37 @@ type User = {
   state: string;
   country: string;
   address: string;
+  subscriptionEndDate: string;
+  isSubscribed: boolean;
 };
 
 const Users = () => {
   const router = useRouter();
+  const [loadingUserId, setLoadingUserId] = React.useState<string | null>(null);
+
   const [{ fetching: fetchingUsers, data }] = useQuery({
-    query: GET_USER,
+    query: GET_USERS,
   });
+
+  console.log(data, 'response');
+
+  const [{ fetching: fetchingGiveFreeMonth }, giveFreeMonth] =
+    useMutation(GIVE_FREE_MONTH);
+
+  const giveFreeMonthFn = async (userId: string) => {
+    setLoadingUserId(userId);
+    const result = await giveFreeMonth({ userId });
+
+    if (result.error) {
+      toast.error(result.error.message || 'Failed to add free month');
+      return;
+    }
+
+    toast.success(
+      result.data?.giveFreeMonth?.message || 'Free month added successfully 🎉'
+    );
+    setLoadingUserId(null);
+  };
 
   //   const [{ fetching: deletingUser }, deleteUser] = useMutation(DELETE_USER);
 
@@ -83,31 +113,31 @@ const Users = () => {
   //     router.push(`/user?id=${id}`);
   //   };
 
-  const users = data?.user ? [data.user] : []; // Adjust based on your actual API response structure
+  const users = data?.users || [];
 
   const columns: ColumnDef<User>[] = [
-    {
-      id: 'select',
-      header: ({ table }) => (
-        <Checkbox
-          checked={
-            table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() && 'indeterminate')
-          }
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      ),
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false,
-    },
+    // {
+    //   id: 'select',
+    //   header: ({ table }) => (
+    //     <Checkbox
+    //       checked={
+    //         table.getIsAllPageRowsSelected() ||
+    //         (table.getIsSomePageRowsSelected() && 'indeterminate')
+    //       }
+    //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+    //       aria-label="Select all"
+    //     />
+    //   ),
+    //   cell: ({ row }) => (
+    //     <Checkbox
+    //       checked={row.getIsSelected()}
+    //       onCheckedChange={(value) => row.toggleSelected(!!value)}
+    //       aria-label="Select row"
+    //     />
+    //   ),
+    //   enableSorting: false,
+    //   enableHiding: false,
+    // },
     {
       accessorKey: 'name',
       header: 'Name',
@@ -133,10 +163,40 @@ const Users = () => {
       cell: ({ row }) => <div>{row.original.state || '-'}</div>,
     },
     {
-      accessorKey: 'country',
-      header: 'Country',
-      cell: ({ row }) => <div>{row.original.country || '-'}</div>,
+      accessorKey: 'isSubscribed',
+      header: 'Subscribed',
+      cell: ({ row }) => (
+        <Badge variant={row.original.isSubscribed ? 'default' : 'secondary'}>
+          {row.original.isSubscribed ? 'Yes' : 'No'}
+        </Badge>
+      ),
     },
+    {
+      accessorKey: 'subscriptionEndDate',
+      header: 'Subscription End Date',
+      cell: ({ row }) => <div>{row.original.subscriptionEndDate || '-'}</div>,
+    },
+    {
+      id: 'actions',
+      enableHiding: false,
+      cell: ({ row }) => {
+        const user = row.original;
+
+        return (
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              giveFreeMonthFn(user.id);
+            }}
+            disabled={fetchingGiveFreeMonth}
+            className='bg-green-500 text-white hover:bg-green-500/80'
+          >
+            {loadingUserId === user.id ? 'Processing...' : '🎁 Give Free Month'}
+          </Button>
+        );
+      },
+    },
+
     // {
     //   id: 'actions',
     //   enableHiding: false,
@@ -196,7 +256,12 @@ const Users = () => {
     },
   });
 
-  if (fetchingUsers) return <div className="p-4">Loading users...</div>;
+  if (fetchingUsers)
+    return (
+      <div className="flex h-screen items-center justify-center text-lg">
+        <Spinner className="w-10 h-10 text-green-500" />
+      </div>
+    );
   if (!data) return <div className="p-4">Failed to load users</div>;
 
   return (

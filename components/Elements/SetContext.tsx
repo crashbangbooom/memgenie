@@ -7,8 +7,15 @@ import { gql, useQuery } from 'urql';
 export const GET_USER = gql`
   query User {
     user {
+      address
+      country
+      email
       id
+      isAdmin
+      isSubscribed
       name
+      state
+      subscriptionEndDate
     }
   }
 `;
