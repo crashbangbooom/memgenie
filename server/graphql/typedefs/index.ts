@@ -37,6 +37,7 @@ const typeDefs = gql`
 
   type Query {
     user: User
+    users: [User!]!
     solveQuestion(
       question: String!
       options: [String!]
