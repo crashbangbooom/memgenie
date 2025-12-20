@@ -7,7 +7,7 @@ function Spinner({ className, ...props }: LucideProps) {
     <Loader2Icon
       role="status"
       aria-label="Loading"
-      className={cn('size-4 animate-spin', className)}
+      className={cn('size-4 animate-spin text-green-500', className)}
       {...props}
     />
   );

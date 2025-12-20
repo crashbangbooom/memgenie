@@ -63,9 +63,9 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-yellow-500">
+    <div className="flex min-h-screen items-center justify-center bg-gray-700">
       <Maxwidth className="max-w-md py-8">
-        <Card className="bg-gray-800">
+        <Card className="bg-gray-800 border border-green-500">
           <CardHeader>
             <CardTitle className="text-green-400">Create an account</CardTitle>
             <CardDescription className="text-white">
@@ -214,7 +214,7 @@ export default function Signup() {
                     <Button
                       variant="outline"
                       type="button"
-                      className="w-full bg-green-500 hover:bg-green-400 text-white hover:text-white"
+                      className="w-full bg-yellow-500/30 text-yellow-500 hover:bg-yellow-500/30 border border-yellow-500 hover:text-yellow-600"
                     >
                       Login with Google
                     </Button>

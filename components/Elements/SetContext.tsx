@@ -7,8 +7,15 @@ import { gql, useQuery } from 'urql';
 export const GET_USER = gql`
   query User {
     user {
+      address
+      country
+      email
       id
+      isAdmin
+      isSubscribed
       name
+      state
+      subscriptionEndDate
     }
   }
 `;
@@ -20,8 +27,7 @@ function SetContext() {
   });
   const { setUser, setFetching } = useContext(AppContext);
   const router = useRouter();
-  const pathname = usePathname();
-
+  const pathname = usePathname(); 
   useEffect(() => {
     setFetching?.(fetchingCurrentUser);
   }, [fetchingCurrentUser]);
