@@ -133,8 +133,8 @@ function Layout({
                 <span
                   className="flex-1 ml-3 whitespace-nowrap"
                   onClick={async () => {
-                    await signOut();
                     Cookies.remove('token');
+                    await signOut();
                     window.location.reload();
                   }}
                 >

@@ -23,7 +23,7 @@ export async function GET() {
     prismaUser = await prisma.user.create({
       data: {
         email,
-        name: user.user_metadata.full_name,
+        name: user.user_metadata.full_name || user.user_metadata.name || '',
         isEmailVerified: true,
       },
     });

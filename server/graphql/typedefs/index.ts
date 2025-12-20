@@ -37,6 +37,7 @@ const typeDefs = gql`
 
   type Query {
     user: User
+    users: [User!]!
     solveQuestion(
       question: String!
       options: [String!]
@@ -59,6 +60,7 @@ const typeDefs = gql`
     verifyEmail(token: String!): StatusResponse!
     updateAdminStatus(userId: String!, status: Boolean): User
     deleteUser(id: String!): User
+    giveFreeMonth(userId: String!): User
 
     sendPhoneOtp(phoneNo: String): StatusResponse
     phoneOtpLogin(otp: String, phoneNo: String): LoginResponse!

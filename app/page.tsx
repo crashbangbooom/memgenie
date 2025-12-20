@@ -68,7 +68,10 @@ export default function Home() {
           variant="outline"
           className="px-6"
           disabled={loadingLogout}
-          onClick={() => logout()}
+          onClick={() => {
+            Cookies.remove('token');
+            logout();
+          }}
         >
           Logout
         </Button>

@@ -58,7 +58,7 @@ export const login = async (
     parseInt(process.env.REQUIRE_EMAIL_VERIFICATION || '') &&
     !user.isEmailVerified
   ) {
-    return { error: 'Email is not verified' };
+    //return { error: 'Email is not verified' };
   }
   if (await bcrypt.compare(password, user.pwHash || '')) {
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string);
@@ -188,4 +188,21 @@ export const phoneOtpLogin = async (
 
 export const deleteUser = adminOnly(async (_: unknown, { id }) => {
   return prisma.user.delete({ where: { id } });
+});
+
+export const giveFreeMonth = adminOnly(async (_: unknown, { id }) => {
+  const user = await prisma.user.findUnique({ where: { id } });
+  if (!user) {
+    throw new Error('User does not exist');
+  }
+  let newEndDate = new Date();
+  if (user.subscriptionEndDate && user.subscriptionEndDate > new Date()) {
+    newEndDate = new Date(user.subscriptionEndDate);
+  }
+  newEndDate.setMonth(newEndDate.getMonth() + 1);
+  const updatedUser = await prisma.user.update({
+    where: { id },
+    data: { subscriptionEndDate: newEndDate },
+  });
+  return updatedUser;
 });
