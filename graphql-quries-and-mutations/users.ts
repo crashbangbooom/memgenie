@@ -12,6 +12,8 @@ export const GET_USERS = gql`
       isSubscribed
       address
       subscriptionEndDate
+      referrals
+      pendingReferralCount
     }
   }
 `;
