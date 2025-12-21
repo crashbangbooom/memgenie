@@ -27,6 +27,24 @@ export async function GET() {
         isEmailVerified: true,
       },
     });
+
+    const referrer = user.user_metadata.referralCode as string | undefined;
+    if (referrer) {
+      const referrerUser = await prisma.user.findUnique({
+        where: { id: referrer },
+      });
+      if (referrerUser) {
+        await prisma.user.update({
+          where: { id: referrer },
+          data: {
+            referrals: {
+              push: prismaUser.id,
+            },
+            pendingReferralCount: referrerUser.pendingReferralCount + 1,
+          },
+        });
+      }
+    }
   }
 
   const token = sign({ id: prismaUser.id }, process.env.JWT_SECRET as string);

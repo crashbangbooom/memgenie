@@ -166,7 +166,9 @@ const Users = () => {
       header: 'Subscribed',
       cell: ({ row }) => (
         <Badge variant={row.original.isSubscribed ? 'default' : 'secondary'}>
-          {row.original.isSubscribed ? 'Yes' : 'No'}
+          {
+          new Date(row.original.subscriptionEndDate)?.getTime() > new Date().getTime() ? 'Yes' : 'No'
+          }
         </Badge>
       ),
     },

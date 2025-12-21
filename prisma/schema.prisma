@@ -12,7 +12,7 @@ model User {
 
   name                String?   @default("")
   email               String?   @default("") @unique
-  phone               String?   @default("") @unique
+  phone               String?   @default("")
   address             String?   @default("")
   state               String?   @default("")
   country             String?   @default("")
@@ -23,6 +23,9 @@ model User {
 
   isSubscribed        Boolean   @default(false)
   subscriptionEndDate DateTime?
+
+  referrals             String[]  @default([])
+  pendingReferralCount  Int       @default(0)
 
   phoneOtp            String?   @default("")
   phoneOtpDoC         DateTime?

@@ -142,32 +142,6 @@ export const updateAdminStatus = adminOnly(
   }
 );
 
-export const sendPhoneOtp = async (
-  _: unknown,
-  { phoneNo }: { phoneNo: string }
-) => {
-  const user = await prisma.user.findFirst({ where: { phone: phoneNo } });
-  if (!user) {
-    throw new Error(PHONE_DOES_NOT_EXIST);
-  }
-  const otp = getRandomNumber();
-  await prisma.user.update({
-    where: { phone: phoneNo },
-    data: {
-      phoneOtp: otp + '',
-      phoneOtpDoC: new Date(),
-    },
-  });
-  const accountSid = process.env.TWILIO_ACCOUNT_SID;
-  const authToken = process.env.TWWILIO_ACCOUNT_TOKEN;
-  const client = require('twilio')(accountSid, authToken);
-  client.messages.create({
-    body: `Your one time password is ${otp}`,
-    to: '+12345678901',
-    //from: '+12345678901',
-  });
-};
-
 type PhoneLoginArgs = { phoneNo: string; otp: string };
 export const phoneOtpLogin = async (
   _: unknown,
