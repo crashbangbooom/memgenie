@@ -176,7 +176,10 @@ export const giveFreeMonth = adminOnly(async (_: unknown, { id }) => {
   newEndDate.setMonth(newEndDate.getMonth() + 1);
   const updatedUser = await prisma.user.update({
     where: { id },
-    data: { subscriptionEndDate: newEndDate },
+    data: { 
+      subscriptionEndDate: newEndDate,
+      pendingReferralCount: 0,
+    },
   });
   return updatedUser;
 });
