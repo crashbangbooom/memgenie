@@ -321,12 +321,12 @@ const Users = () => {
     <div className="w-full p-4">
       <div className="flex items-center justify-between py-4 ">
         <Input
-          placeholder="Filter Name..."
+          placeholder="Filter by name..."
           value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
             table.getColumn('name')?.setFilterValue(event.target.value)
           }
-          className="max-w-sm text-black"
+          className="max-w-sm text-black placeholder:text-black focus-visible:ring-0"
         />
 
         {/* <Button onClick={() => router.push("/user")} className="ml-auto">
