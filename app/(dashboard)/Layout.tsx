@@ -26,20 +26,20 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
     context: { user },
   } = useContext(AppContext);
 
-  useEffect(() => {
-    if (!user) return router.push('/auth/signin');
-    if (user.isAdmin === false) {
-      router.push('/');
-    }
-  }, [user, router]);
+  // useEffect(() => {
+  //   if (!user) return router.push('/auth/signin');
+  //   if (user.isAdmin === false) {
+  //     router.push('/');
+  //   }
+  // }, [user, router]);
 
-  if (!user) {
-    return (
-      <div className="flex h-screen items-center justify-center text-lg">
-        <Spinner className="w-10 h-10" />
-      </div>
-    );
-  }
+  // if (!user) {
+  //   return (
+  //     <div className="flex h-screen items-center justify-center text-lg">
+  //       <Spinner className="w-10 h-10" />
+  //     </div>
+  //   );
+  // }
 
   return (
     <SidebarProvider>

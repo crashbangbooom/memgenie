@@ -16,6 +16,8 @@ export const GET_USER = gql`
       name
       state
       subscriptionEndDate
+      referrals
+      pendingReferralCount
     }
   }
 `;
@@ -27,7 +29,7 @@ function SetContext() {
   });
   const { setUser, setFetching } = useContext(AppContext);
   const router = useRouter();
-  const pathname = usePathname(); 
+  const pathname = usePathname();
   useEffect(() => {
     setFetching?.(fetchingCurrentUser);
   }, [fetchingCurrentUser]);

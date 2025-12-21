@@ -62,6 +62,8 @@ type User = {
   address: string;
   subscriptionEndDate: string;
   isSubscribed: boolean;
+  referrals: string[];
+  pendingReferralCount: number;
 };
 
 const Users = () => {
@@ -166,17 +168,61 @@ const Users = () => {
       header: 'Subscribed',
       cell: ({ row }) => (
         <Badge variant={row.original.isSubscribed ? 'default' : 'secondary'}>
-          {
-          new Date(row.original.subscriptionEndDate)?.getTime() > new Date().getTime() ? 'Yes' : 'No'
-          }
+          {new Date(row.original.subscriptionEndDate)?.getTime() >
+          new Date().getTime()
+            ? 'Yes'
+            : 'No'}
         </Badge>
       ),
     },
     {
       accessorKey: 'subscriptionEndDate',
       header: 'Subscription End Date',
-      cell: ({ row }) => <div>{row.original.subscriptionEndDate || '-'}</div>,
+      cell: ({ row }) => {
+        const value = row.original.subscriptionEndDate;
+
+        if (!value) return <span>-</span>;
+
+        const date = new Date(Number(value));
+
+        return (
+          <div className="flex flex-col">
+            <span>{date.toLocaleDateString('en-GB')}</span>
+            <span className="text-xs text-muted-foreground">
+              {date.toLocaleTimeString('en-GB')}
+            </span>
+          </div>
+        );
+      },
     },
+
+    {
+      accessorKey: 'pendingReferralCount',
+      header: 'Pending Referral Count',
+      cell: ({ row }) => <div>{row.original.pendingReferralCount || 0}</div>,
+    },
+    {
+      accessorKey: 'referrals',
+      header: 'Referrals',
+      cell: ({ row }) => {
+        const referrals = row.original.referrals || [];
+
+        if (!referrals.length) {
+          return <span className="">No</span>;
+        }
+
+        return (
+          <div className="space-y-1 text-xs">
+            {referrals?.map((id: string) => (
+              <div key={id} className="">
+                {id}
+              </div>
+            ))}
+          </div>
+        );
+      },
+    },
+
     {
       id: 'actions',
       enableHiding: false,

@@ -1,3 +1,4 @@
+// app/api/get-token/route.ts
 import { createSupabaseServerClient } from '@/lib/session';
 import prisma from '@/prisma/prisma';
 import { sign } from 'jsonwebtoken';
