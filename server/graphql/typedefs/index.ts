@@ -19,6 +19,8 @@ const typeDefs = gql`
     isAdmin: Boolean
     isSubscribed: Boolean
     subscriptionEndDate: Date
+    referrals: [String!]
+    pendingReferralCount: Int
   }
 
   type LoginResponse {
