@@ -22,7 +22,6 @@ import {
 } from '@/server/services/email';
 import { getPayload } from '@/server/services/token';
 import { adminOnly } from '../../wrappers';
-import { getRandomNumber } from '@/utils/generator';
 
 type RegisterUserInput = Prisma.User & { password: string };
 export const registerUser = async (_: unknown, args: RegisterUserInput) => {
@@ -164,8 +163,8 @@ export const deleteUser = adminOnly(async (_: unknown, { id }) => {
   return prisma.user.delete({ where: { id } });
 });
 
-export const giveFreeMonth = adminOnly(async (_: unknown, { id }) => {
-  const user = await prisma.user.findUnique({ where: { id } });
+export const giveFreeMonth = adminOnly(async (_: unknown, { userId }) => {
+  const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) {
     throw new Error('User does not exist');
   }
@@ -175,8 +174,8 @@ export const giveFreeMonth = adminOnly(async (_: unknown, { id }) => {
   }
   newEndDate.setMonth(newEndDate.getMonth() + 1);
   const updatedUser = await prisma.user.update({
-    where: { id },
-    data: { 
+    where: { id: userId },
+    data: {
       subscriptionEndDate: newEndDate,
       pendingReferralCount: 0,
     },
