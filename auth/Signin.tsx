@@ -1,7 +1,7 @@
 // auth/login/page.tsx
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -31,18 +31,30 @@ import { Spinner } from '@/components/ui/spinner';
 import Link from 'next/link';
 import Maxwidth from '@/components/Maxwidth';
 import { useAuth } from './auth-config/useAuth';
+import Cookies from 'js-cookie';
 
 type LoginValues = z.infer<typeof loginSchema>;
 
 export default function Signin() {
   const router = useRouter();
-  const { signin, loadingSignin, signinWithGoogle, loadingSigninWithGoogle,  signinWithFacebook, loadingSigninWithFacebook } = useAuth();
+  const {
+    signin,
+    loadingSignin,
+    signinWithGoogle,
+    loadingSigninWithGoogle,
+    signinWithFacebook,
+    loadingSigninWithFacebook,
+  } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' },
   });
+
+  useEffect(() => {
+    Cookies.remove('token');
+  }, []);
 
   const onSubmit = async (values: LoginValues) => {
     await signin(values);
@@ -51,10 +63,12 @@ export default function Signin() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-700">
       <Maxwidth className="max-w-md py-8 ">
-        <Card className='bg-gray-800 border border-green-500'>
+        <Card className="bg-gray-800 border border-green-500">
           <CardHeader>
-            <CardTitle className='text-green-500'>Login to your account</CardTitle>
-            <CardDescription className='text-white'>
+            <CardTitle className="text-green-500">
+              Login to your account
+            </CardTitle>
+            <CardDescription className="text-white">
               Enter your email below to login to your account
             </CardDescription>
           </CardHeader>
@@ -69,7 +83,7 @@ export default function Signin() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className='text-white'>Email*</FormLabel>
+                      <FormLabel className="text-white">Email*</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="you@example.com"
@@ -88,7 +102,7 @@ export default function Signin() {
                   render={({ field }) => (
                     <FormItem>
                       <div className="flex items-center justify-between ">
-                        <FormLabel className='text-white'>Password*</FormLabel>
+                        <FormLabel className="text-white">Password*</FormLabel>
                         <Link
                           href="/auth/forgot-password"
                           className=" text-sm text-white underline-offset-4 hover:underline"
@@ -152,9 +166,15 @@ export default function Signin() {
                       className="w-full bg-yellow-500/30 text-yellow-500 hover:bg-yellow-500/30 border border-yellow-500 hover:text-yellow-600"
                       onClick={signinWithGoogle}
                       disabled={loadingSigninWithGoogle}
-                      
                     >
-                     {loadingSigninWithGoogle ? <><Spinner /> Login with Google ...</> : "Login with Google" }                    </Button>
+                      {loadingSigninWithGoogle ? (
+                        <>
+                          <Spinner /> Login with Google ...
+                        </>
+                      ) : (
+                        'Login with Google'
+                      )}{' '}
+                    </Button>
 
                     {/* <Button
                       variant="outline"
