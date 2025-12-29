@@ -39,6 +39,7 @@ function SetContext() {
       setUser?.(userData.user);
     }
   }, [fetchingCurrentUser, userData]);
+  // console.log(userData, "userData")
 
   return null;
 }
