@@ -51,6 +51,7 @@ import {
 } from '@/graphql-quries-and-mutations/users';
 import toast from 'react-hot-toast';
 import { Spinner } from '@/components/ui/spinner';
+import moment from 'moment';
 
 type User = {
   id: string;
@@ -73,7 +74,7 @@ const Users = () => {
   const [{ fetching: fetchingUsers, data }] = useQuery({
     query: GET_USERS,
   });
-
+  // console.log(data, 'data');
   const [{ fetching: fetchingGiveFreeMonth }, giveFreeMonth] =
     useMutation(GIVE_FREE_MONTH);
 
@@ -182,14 +183,13 @@ const Users = () => {
         const value = row.original.subscriptionEndDate;
 
         if (!value) return <span>-</span>;
-
-        const date = new Date(Number(value));
+        const m = moment(Number(value));
 
         return (
           <div className="flex flex-col">
-            <span>{date.toLocaleDateString('en-GB')}</span>
+            <span>{m.format('DD/MM/YYYY')}</span>
             <span className="text-xs text-muted-foreground">
-              {date.toLocaleTimeString('en-GB')}
+              {m.format('HH:mm:ss')}
             </span>
           </div>
         );
