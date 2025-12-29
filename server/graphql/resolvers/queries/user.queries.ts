@@ -28,7 +28,8 @@ export const solveQuestion = async (
     question: string;
     options: string[];
     context: string;
-  }
+  },
+  { user }: IGqlContext
 ) => {
   const optionsString = options
     .map((option, index) => {
@@ -61,7 +62,15 @@ export const solveQuestion = async (
   if (promptResponseMap.has(prompt)) {
     console.log('Prompt found in cache');
     const cachedResponse = promptResponseMap.get(prompt)!;
-    return JSON.parse(cachedResponse);
+    const response = JSON.parse(cachedResponse);
+    return {
+      ...response,
+      userId: user?.id || 'guest',
+      isSubscribed: user
+        ? user.subscriptionEndDate &&
+          new Date(user.subscriptionEndDate) > new Date()
+        : false,
+    };
   } else {
     console.log('Prompt not found in cache');
   }
@@ -87,5 +96,15 @@ export const solveQuestion = async (
     '\nEND RESPONSE\n\n\n'
   );
   promptResponseMap.set(prompt, response.choices[0].message.content as string);
-  return JSON.parse(response.choices[0].message.content as string);
+  const openaiResponse = JSON.parse(
+    response.choices[0].message.content as string
+  );
+  return {
+    ...openaiResponse,
+    userId: user?.id || 'guest',
+    isSubscribed: user
+      ? user.subscriptionEndDate &&
+        new Date(user.subscriptionEndDate) > new Date()
+      : false,
+  };
 };

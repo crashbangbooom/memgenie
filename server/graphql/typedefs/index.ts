@@ -7,6 +7,8 @@ const typeDefs = gql`
   type Answer {
     correctOption: Int
     mainWord: String
+    userId: String
+    isSubscribed: Boolean
   }
 
   type User {

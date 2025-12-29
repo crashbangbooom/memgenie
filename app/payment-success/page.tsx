@@ -40,7 +40,9 @@ export default function PaymentSuccess() {
               <div className="space-y-3">
                 <Button
                   className="w-full bg-yellow-500/30 text-yellow-500 hover:bg-yellow-500/30 border border-yellow-500 hover:text-yellow-600"
-                  onClick={() => router.push('/')}
+                  onClick={() =>
+                    (window.location.href = 'https://memgenie.net/')
+                  }
                 >
                   <ArrowRight className="w-4 h-4 mr-2" />
                   Continue
