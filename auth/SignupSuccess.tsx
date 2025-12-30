@@ -25,24 +25,31 @@ export default function SignupSuccess() {
             <CardTitle className="text-2xl font-semibold text-green-500">
               Account Created Successfully!
             </CardTitle>
-            <CardDescription className="text-white">
+            <CardDescription className="text-white hidden">
               We&apos;ve sent a confirmation email to your inbox. Please verify
               your email to complete the signup process.
             </CardDescription>
           </CardHeader>
 
           <CardContent>
-            <p className="text-sm text-white">
+            <p className="text-sm text-white hidden">
               Once verified, you can log in to access your dashboard and start
               using your account.
             </p>
           </CardContent>
 
           <CardFooter className="flex flex-col gap-3">
-            <Button asChild className="w-full bg-green-500 text-white hover:bg-green-400">
+            <Button
+              asChild
+              className="w-full bg-green-500 text-white hover:bg-green-400"
+            >
               <Link href="/auth/signin">Go to Login</Link>
             </Button>
-            <Button variant="outline" asChild className="w-full bg-green-500 hover:bg-green-400 text-white hover:text-white">
+            <Button
+              variant="outline"
+              asChild
+              className="w-full bg-green-500 hover:bg-green-400 text-white hover:text-white"
+            >
               <Link href="/">Return to Home</Link>
             </Button>
           </CardFooter>
