@@ -33,6 +33,7 @@ import { useMutation } from 'urql';
 import { SIGNUP } from './auth-config/graphqlAuth';
 import { AUTH_PROVIDER } from './auth-config/authProvider';
 import { useAuth } from './auth-config/useAuth';
+import Image from 'next/image';
 
 type SignupValues = z.infer<typeof signupSchema>;
 
@@ -67,6 +68,15 @@ export default function Signup() {
       <Maxwidth className="max-w-md py-8">
         <Card className="bg-gray-800 border border-green-500">
           <CardHeader>
+            <div className="rounded-full border-4 border-green-500 w-[100px] h-[100px] flex items-center justify-center mx-auto bg-green-500/20">
+              <Image
+                src={'/logo.png'}
+                width={100}
+                height={100}
+                alt="logo"
+                className="rounded-full bg-gray-800 p-1"
+              />
+            </div>
             <CardTitle className="text-green-400">Create an account</CardTitle>
             <CardDescription className="text-white">
               Enter your information below to create your account

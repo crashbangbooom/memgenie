@@ -25,7 +25,14 @@ import Cookies from 'js-cookie';
 export function useAuth() {
   const router = useRouter();
   const [loadingType, setLoadingType] = useState<
-    'signup' | 'signin' | 'forgotPassword' | 'resetPassword' | 'logout' | 'signinWithGoogle' | 'signinWithFacebook' | null
+    | 'signup'
+    | 'signin'
+    | 'forgotPassword'
+    | 'resetPassword'
+    | 'logout'
+    | 'signinWithGoogle'
+    | 'signinWithFacebook'
+    | null
   >(null);
 
   const [{ fetching: fetchingSignup }, signupGQL] = useMutation(SIGNUP);
@@ -40,6 +47,7 @@ export function useAuth() {
   function handleSuccess(message: string, redirectTo?: string) {
     toast.success(message);
     if (redirectTo) router.push(redirectTo);
+    // if (redirectTo) window.location.href = redirectTo;
   }
 
   // signup function
@@ -73,7 +81,8 @@ export function useAuth() {
       } else if (AUTH_PROVIDER === 'supabase') {
         await signinSB(values);
       }
-      handleSuccess('Logged in successfully.', '/');
+      toast.success('Logged in successfully.');
+      window.location.href = 'https://memgenie.net';
     } catch (err: any) {
       toast.error(err?.message || 'Login failed. Check credentials.');
     } finally {

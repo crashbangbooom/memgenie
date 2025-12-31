@@ -15,7 +15,7 @@ import { Button } from '@/components/ui/button';
 
 export default function SignupSuccess() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-yellow-500">
+    <div className="flex min-h-screen items-center justify-center bg-gray-700">
       <Maxwidth className="max-w-md py-8">
         <Card className="text-center bg-gray-800">
           <CardHeader>
@@ -45,13 +45,13 @@ export default function SignupSuccess() {
             >
               <Link href="/auth/signin">Go to Login</Link>
             </Button>
-            <Button
+            {/* <Button
               variant="outline"
               asChild
               className="w-full bg-green-500 hover:bg-green-400 text-white hover:text-white"
             >
               <Link href="/">Return to Home</Link>
-            </Button>
+            </Button> */}
           </CardFooter>
         </Card>
       </Maxwidth>
