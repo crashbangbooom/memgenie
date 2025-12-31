@@ -24,15 +24,20 @@ export default function Home() {
         data.json().then((d) => {
           if (!d.user?.token) return;
           Cookies.set('token', d.user.token);
-          window.location.reload();
         });
+        window.location.href = 'https://memgenie.net';
       });
+    } else {
+      window.location.href = 'https://memgenie.net';
     }
   }, []);
 
+  return null;
+
+  /*
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-black dark:via-neutral-900 dark:to-neutral-800 transition-colors duration-300">
-      {/* HERO SECTION (Membean-style) */}
+      
       <section className="max-w-6xl mx-auto px-6 py-24 text-center">
         <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white">
           Learn Smarter Vocabulary <br />
@@ -44,7 +49,6 @@ export default function Home() {
           powered by intelligent explanations, examples, and daily practice.
         </p>
 
-        {/* CTA Buttons */}
         <div className="mt-10 flex flex-wrap justify-center gap-4">
           {!user?.id ? (
             <>
@@ -88,7 +92,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SIMPLE FEATURES STRIP (like Membean) */}
       <section className="border-t border-gray-200 dark:border-neutral-800">
         <div className="max-w-6xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
           <div>
@@ -121,5 +124,5 @@ export default function Home() {
         </div>
       </section>
     </main>
-  );
+  );*/
 }
