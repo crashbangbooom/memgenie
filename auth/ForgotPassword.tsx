@@ -51,7 +51,7 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="flex min-h-screen   items-center justify-center bg-yellow-500">
+    <div className="flex min-h-screen   items-center justify-center bg-gray-700">
       <Maxwidth className="max-w-md py-8">
         <Card className="bg-gray-800">
           <CardHeader>

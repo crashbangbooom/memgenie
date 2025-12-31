@@ -32,6 +32,7 @@ import Link from 'next/link';
 import Maxwidth from '@/components/Maxwidth';
 import { useAuth } from './auth-config/useAuth';
 import Cookies from 'js-cookie';
+import Image from 'next/image';
 
 type LoginValues = z.infer<typeof loginSchema>;
 
@@ -61,10 +62,19 @@ export default function Signin() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-700">
+    <div className="flex min-h-screen items-center  bg-gray-700">
       <Maxwidth className="max-w-md py-8 ">
         <Card className="bg-gray-800 border border-green-500">
           <CardHeader>
+            <div className="rounded-full border-4 border-green-500 w-[100px] h-[100px] flex items-center justify-center mx-auto bg-green-500/20">
+              <Image
+                src={'/logo.png'}
+                width={100}
+                height={100}
+                alt="logo"
+                className="rounded-full bg-gray-800 p-1"
+              />
+            </div>
             <CardTitle className="text-green-500">
               Login to your account
             </CardTitle>
