@@ -45,13 +45,13 @@ export default function SignupSuccess() {
             >
               <Link href="/auth/signin">Go to Login</Link>
             </Button>
-            <Button
+            {/* <Button
               variant="outline"
               asChild
               className="w-full bg-green-500 hover:bg-green-400 text-white hover:text-white"
             >
               <Link href="/">Return to Home</Link>
-            </Button>
+            </Button> */}
           </CardFooter>
         </Card>
       </Maxwidth>
