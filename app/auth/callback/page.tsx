@@ -22,8 +22,7 @@ export default function OAuthCallback() {
       }
 
       toast.success('Logged in successfully!');
-      // router.push('/');
-      window.location.href = 'https://memgenie.net';
+      router.push('/'); 
     };
 
     handleSession();
