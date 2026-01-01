@@ -22,7 +22,7 @@ export default function OAuthCallback() {
       }
 
       toast.success('Logged in successfully!');
-      router.push('/'); 
+      router.push('/');
     };
 
     handleSession();
@@ -30,7 +30,7 @@ export default function OAuthCallback() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-700">
-      <div className="backdrop-blur-xl bg-white/60 shadow-xl rounded-lg px-8 py-6 flex flex-col items-center space-y-4">
+      <div className="backdrop-blur-xl bg-gray-900 shadow-xl rounded-lg px-8 py-6 flex flex-col items-center space-y-4">
         <div className="h-6 w-6 animate-spin rounded-full border-2 border-green-500 border-t-black"></div>
 
         <p className="text-sm text-white font-medium">
