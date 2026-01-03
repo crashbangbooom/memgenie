@@ -81,8 +81,10 @@ export function useAuth() {
       } else if (AUTH_PROVIDER === 'supabase') {
         await signinSB(values);
       }
-      toast.success('Logged in successfully.');
-      window.location.href = 'https://memgenie.net';
+       handleSuccess(
+          'Logged in successfully.',
+          '/'
+        );
     } catch (err: any) {
       toast.error(err?.message || 'Login failed. Check credentials.');
     } finally {
