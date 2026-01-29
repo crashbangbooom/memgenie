@@ -59,10 +59,25 @@ export const solveQuestion = async (
       '\n</context>';
   }
 
+  if (question.indexOf('Q_WITH_HINT: ') === 0) {
+    prompt =
+      'You have to find the missing word or guess the word. The word should be returned as mainWord.\n\n';
+    prompt +=
+      'You will be provided with a hint, word length and in some cases some content where the missing word should exist.\n\n';
+    prompt +=
+      'Based on the hint and other information, you have to guess the missing word.\n\n';
+    prompt +=
+      'The response should be in JSON format as below:\n{\n  "mainWord": "<the guessed word>"\n}\n\n';
+    const questionWithoutPrefix = question.replace('Q_WITH_HINT: ', '');
+    prompt += 'Here is the information you have:\n\n' + questionWithoutPrefix;
+    prompt += 'Context is: ' + context + '\n\n';
+  }
+
   if (promptResponseMap.has(prompt)) {
     console.log('Prompt found in cache');
     const cachedResponse = promptResponseMap.get(prompt)!;
     const response = JSON.parse(cachedResponse);
+    console.log('Cached response:', response);
     return {
       ...response,
       userId: user?.id || 'guest',
@@ -90,15 +105,11 @@ export const solveQuestion = async (
     ],
   });
 
-  console.log(
-    'RESPONSE:\n',
-    response.choices[0].message.content,
-    '\nEND RESPONSE\n\n\n'
-  );
   promptResponseMap.set(prompt, response.choices[0].message.content as string);
   const openaiResponse = JSON.parse(
     response.choices[0].message.content as string
   );
+  console.log('OpenAI response:', openaiResponse);
   return {
     ...openaiResponse,
     userId: user?.id || 'guest',
