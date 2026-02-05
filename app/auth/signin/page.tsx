@@ -1,3 +1,3 @@
-import Signin from '@/auth/Signin';
+import AuthPage from '@/auth/Signin';
 
-export default Signin;
+export default AuthPage;

@@ -1,3 +1,16 @@
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
+
+const Signup = () => {
+  const router = useRouter();
+  useEffect(() => {
+    router.push('/auth/signin');
+  }, []);
+  return null;
+};
+
+export default Signup;
+
 // // auth/Signup.tsx
 // 'use client';
 

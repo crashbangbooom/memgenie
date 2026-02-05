@@ -57,6 +57,7 @@ export default function AuthPage() {
   const signupForm = useForm<SignupValues>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
+      name: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -221,8 +222,27 @@ export default function AuthPage() {
               <Form {...signupForm} key="signup-form">
                 <form
                   onSubmit={signupForm.handleSubmit(onSignup)}
-                  className="grid gap-4"
+                  className="grid gap-3"
                 >
+                    <FormField
+                    control={signupForm.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-[#e8eefc] text-[13px] font-bold">
+                          Name
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="John Doe"
+                            className="placeholder:text-[#9db0d0] text-[#e8eefc]"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   <FormField
                     control={signupForm.control}
                     name="email"
