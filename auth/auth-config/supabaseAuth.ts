@@ -13,8 +13,7 @@ export async function signupSB(payload: any) {
       emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/`,
     },
   });
-  if (error) throw error;
-  console.log(data, "signup user")
+  if (error) throw error; 
   if (data?.user?.identities?.length === 0)
     throw new Error(
       'User with this email already exists, please login instead'
