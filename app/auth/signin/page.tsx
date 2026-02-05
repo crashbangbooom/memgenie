@@ -1,3 +1,7 @@
 import AuthPage from '@/auth/Signin';
 
-export default AuthPage;
+const Signin = () => {
+  return <AuthPage defaultMode="login" />;
+};
+
+export default Signin;

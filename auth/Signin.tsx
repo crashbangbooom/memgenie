@@ -30,7 +30,11 @@ import { useAuth } from './auth-config/useAuth';
 type LoginValues = z.infer<typeof loginSchema>;
 type SignupValues = z.infer<typeof signupSchema>;
 
-export default function AuthPage() {
+export default function AuthPage({
+  defaultMode = 'login',
+}: {
+  defaultMode?: 'login' | 'signup';
+}) {
   const searchParams = useSearchParams();
   const referralCodeId = searchParams.get('ref') || '';
 
@@ -43,7 +47,7 @@ export default function AuthPage() {
     loadingSigninWithGoogle,
   } = useAuth();
 
-  const [mode, setMode] = useState<'login' | 'signup'>('login');
+  const [mode, setMode] = useState<'login' | 'signup'>(defaultMode);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showLoginPassword, setShowLoginPassword] = useState(false);
@@ -224,7 +228,7 @@ export default function AuthPage() {
                   onSubmit={signupForm.handleSubmit(onSignup)}
                   className="grid gap-3"
                 >
-                    <FormField
+                  <FormField
                     control={signupForm.control}
                     name="name"
                     render={({ field }) => (

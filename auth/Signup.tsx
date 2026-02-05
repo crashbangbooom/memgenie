@@ -2,13 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
+import AuthPage from './Signin';
 
 const Signup = () => {
-  const router = useRouter();
-  useEffect(() => {
-    router.push('/auth/signin');
-  }, []);
-  return null;
+  return <AuthPage defaultMode="signup" />;
 };
 
 export default Signup;
