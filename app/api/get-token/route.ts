@@ -28,7 +28,7 @@ export async function GET() {
         isEmailVerified: true,
       },
     });
-
+   
     const referrer = user.user_metadata.referralCode as string | undefined;
     if (referrer) {
       const referrerUser = await prisma.user.findUnique({

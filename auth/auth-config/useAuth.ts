@@ -59,11 +59,18 @@ export function useAuth() {
         if (result.error) throw result.error;
       } else if (AUTH_PROVIDER === 'supabase') {
         await signupSB(values);
+        // this jsut for token store in cookie
+        const result = await signupGQL({
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        });
+        // console.log(result, 'result user');
+        if (result?.data?.registerUser?.token) {
+          Cookies.set('token', result.data.registerUser.token);
+        }
       }
-      handleSuccess(
-        'Account created successfully! Please check your email for confirmation.',
-        '/auth/signup-success'
-      );
+      handleSuccess('Account created successfully!', '/');
     } catch (err: any) {
       toast.error(err.message || 'Something went wrong during signup.');
     } finally {
@@ -81,10 +88,7 @@ export function useAuth() {
       } else if (AUTH_PROVIDER === 'supabase') {
         await signinSB(values);
       }
-       handleSuccess(
-          'Logged in successfully.',
-          '/'
-        );
+      handleSuccess('Logged in successfully.', '/');
     } catch (err: any) {
       toast.error(err?.message || 'Login failed. Check credentials.');
     } finally {

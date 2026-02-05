@@ -6,10 +6,13 @@ export const signupSchema = z
   .object({
     name: z.string().min(2, 'Name must be at least 2 characters.'),
     email: z.string().email('Invalid email address.'),
-    phone: z
+    password: z
       .string()
-      .regex(/^\d{10,15}$/, 'Phone number must be 10 to 15 digits.'),
-    password: z.string().min(6, 'Password must be at least 6 characters.'),
+      .min(6, 'Password must be at least 6 characters.')
+      .regex(
+        /^(?=.*[A-Za-z])(?=.*\d).+$/,
+        'Password must contain at least one letter and one number.'
+      ),
     confirmPassword: z.string().min(6, 'Please confirm your password.'),
     referralCode: z.string().optional(),
   })
