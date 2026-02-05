@@ -61,8 +61,8 @@ export function useAuth() {
         await signupSB(values);
       }
       handleSuccess(
-        'Account created successfully! Please check your email for confirmation.',
-        '/auth/signup-success'
+        'Account created successfully!',
+        '/'
       );
     } catch (err: any) {
       toast.error(err.message || 'Something went wrong during signup.');
