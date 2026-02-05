@@ -25,6 +25,21 @@ const typeDefs = gql`
     pendingReferralCount: Int
   }
 
+  type RegisterResponse {
+    token: String
+    id: String!
+    name: String
+    email: String
+    address: String
+    state: String
+    country: String
+    isAdmin: Boolean
+    isSubscribed: Boolean
+    subscriptionEndDate: Date
+    referrals: [String!]
+    pendingReferralCount: Int
+  }
+
   type LoginResponse {
     token: String
     error: String
@@ -56,7 +71,7 @@ const typeDefs = gql`
       state: String
       country: String
       password: String!
-    ): User
+    ): RegisterResponse!
     login(email: String!, password: String!): LoginResponse!
     sendResetPasswordLink(email: String!): MessageResponse!
     resetPassword(password: String!, token: String!): StatusResponse!

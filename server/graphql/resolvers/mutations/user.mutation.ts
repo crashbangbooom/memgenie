@@ -34,12 +34,19 @@ export const registerUser = async (_: unknown, args: RegisterUserInput) => {
 
   const { password: _p, ...data } = args;
 
-  return prisma.user.create({
+  const user = await prisma.user.create({
     data: {
       ...data,
       pwHash,
     },
   });
+
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string);
+
+  return {
+    ...user,
+    token,
+  };
 };
 
 type LoginUserInput = { email: string; password: string };
