@@ -26,11 +26,12 @@ export default function Home() {
           Cookies.set('token', d.user.token);
         });
         // window.location.href = 'https://memgenie.net';
-         window.location.href = 'https://bestmembeanbots.com/instructions.html'; 
+        window.location.href = 'https://bestmembeanbots.com/instructions.html';
       });
     } else {
       // window.location.href = 'https://memgenie.net';
-       window.location.href = 'https://bestmembeanbots.com/instructions.html'; 
+      //  window.location.href = 'https://bestmembeanbots.com/instructions.html';
+      window.location.href = process.env.NEXT_PUBLIC_INDEX_LINK!;
     }
   }, []);
 
