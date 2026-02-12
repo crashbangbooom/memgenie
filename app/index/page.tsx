@@ -2,10 +2,10 @@
 
 import { useEffect } from 'react';
 
-export default function InstructionsPage() {
+export default function IndexPage() {
   useEffect(() => {
     if (window) {
-      window.location.href = process.env.NEXT_PUBLIC_INSTRUCTIONS_LINK!;
+      window.location.href = process.env.NEXT_PUBLIC_INDEX_LINK!;
     }
   }, []);
 
