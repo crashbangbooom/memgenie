@@ -13,9 +13,26 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { useRouter } from 'next/navigation';
 import Maxwidth from '@/components/Maxwidth';
+import { useEffect, useState } from 'react';
 
 export default function PaymentSuccess() {
   const router = useRouter();
+  const [countdown, setCountdown] = useState(3);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          window.location.href =
+            'https://bestmembeanbots.com/instructions.html';
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-700">
@@ -32,6 +49,11 @@ export default function PaymentSuccess() {
               Thank you for your purchase. Your subscription has been activated
               successfully.
             </CardDescription>
+            <p className="text-gray-400 text-sm mt-2">
+              Redirecting in{' '}
+              <span className="text-yellow-400 font-bold">{countdown}</span>{' '}
+              second{countdown !== 1 ? 's' : ''}...
+            </p>
           </CardHeader>
 
           <CardContent className="space-y-6">
