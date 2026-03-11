@@ -1,6 +1,7 @@
 import prisma from '@/prisma/prisma';
 import { IGqlContext } from '@/types';
 import OpenAI from 'openai';
+import { ChatCompletionContentPart } from 'openai/resources/index';
 
 const promptResponseMap = new Map<string, string>();
 
@@ -94,13 +95,33 @@ export const solveQuestion = async (
     apiKey: process.env.OPENAI_API_KEY!,
   });
 
+  const containsImage = question.includes(
+    'Answer by keeping this image in mind'
+  );
+  console.log('Does the question contain an image?', containsImage);
+  const content: string | ChatCompletionContentPart[] = containsImage
+    ? [
+        {
+          type: 'text',
+          text: prompt,
+        },
+        {
+          type: 'image_url',
+          image_url: {
+            url: context,
+          },
+        },
+      ]
+    : prompt;
+  console.log('Content', content);
+
   const response = await client.chat.completions.create({
     model: 'gpt-4o-mini',
     response_format: { type: 'json_object' },
     messages: [
       {
         role: 'user',
-        content: prompt,
+        content: content,
       },
     ],
   });
