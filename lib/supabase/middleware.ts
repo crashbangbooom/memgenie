@@ -48,8 +48,9 @@ export async function updateSession(request: NextRequest) {
     !request.nextUrl.pathname.includes('/api/graphql') &&
     !request.nextUrl.pathname.includes('/api/stripe/handle-stripe-payment') &&
     !request.nextUrl.pathname.includes('/instructions') &&
-    !request.nextUrl.pathname.includes('/index_') &&
-    !request.nextUrl.pathname.startsWith('/auth')
+    !request.nextUrl.pathname.startsWith('/auth') &&
+    !request.nextUrl.pathname.startsWith('/index_') &&
+    !request.nextUrl.pathname.startsWith('/api/stripe/create-checkout-session')
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
