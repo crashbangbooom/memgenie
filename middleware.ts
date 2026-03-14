@@ -16,6 +16,6 @@
 // middleware.js
 import { NextResponse } from 'next/server';
 
-export function middleware(req) {
+export function middleware(req:any) {
   return new NextResponse('Site temporarily unavailable', { status: 503 });
 }
